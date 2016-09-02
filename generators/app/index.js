@@ -3,9 +3,10 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var mv = require('mv');
-var fs = require('fs');
+var replace = require('replace');
 
 // var normalize = require('./helpers/normalize-helper');
+var files = require('./helpers/file-helper');
 var clone = require('./helpers/clone-helper');
 var getDependencies = require('./helpers/dependencies-helper');
 var dependencies = {};
@@ -44,7 +45,7 @@ module.exports = yeoman.Base.extend({
       {
         type: 'confirm',
         name: 'mForgeInstall',
-        message: 'Do you want to install m-forge?',
+        message: 'Do you want to install m-forge globaly? It\'s needed to test your moblet locally.',
         default: false
       }
     ];
@@ -128,30 +129,25 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
-    console.log(chalk.blue('\n[BEGIN] Installing dependencies'));
-    this.npmInstall(dependencies);
-    if (this.answers.mForgeInstall) {
-      this.npmInstall(dependencies);
-    }
+    // if (this.answers.mForgeInstall) {
+    //   console.log(chalk.blue('\n[BEGIN] Installing m-forge globaly'));
+    //   this.npmInstall(['jasmine'], {global: true});
+    //   console.log(chalk.blue('[BEGIN] Installing dependencies'));
+    //   this.npmInstall(dependencies);
+    // } else {
+    //   console.log(chalk.blue('\n[BEGIN] Installing dependencies'));
+    //   this.npmInstall(dependencies);
+    // }
   },
 
   end: function () {
+    if (this.answers.mForgeInstall) {
+      console.log(chalk.green('[SUCCESS] Installing m-forge'));
+    }
     console.log(chalk.green('[SUCCESS] Installing dependencies'));
     // var mobletName = this.answers.mobletName;
     var mobletName = 'tmp';
-    var deleteFolderRecursive = function (path) {
-      if (fs.existsSync(path)) {
-        fs.readdirSync(path).forEach(function (file) {
-          var curPath = path + '/' + file;
-          if (fs.lstatSync(curPath).isDirectory()) { // recurse
-            deleteFolderRecursive(curPath);
-          } else { // delete file
-            fs.unlinkSync(curPath);
-          }
-        });
-        fs.rmdirSync(path);
-      }
-    };
-    deleteFolderRecursive(mobletName);
+    console.log(files);
+    files.deleteFolderRecursive(mobletName);
   }
 });
