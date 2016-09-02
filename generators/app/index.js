@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var mv = require('mv');
+var fs = require('fs');
 
 // var normalize = require('./helpers/normalize-helper');
 var clone = require('./helpers/clone-helper');
@@ -86,7 +87,7 @@ module.exports = yeoman.Base.extend({
     clone(gitUrl, mobletName)
       .then(function () {
         console.log(
-          chalk.green('[SUCCESS] Success cloning ' + baseMobletLabel));
+          chalk.green('[SUCCESS] Cloning ' + baseMobletLabel));
 
         return getDependencies(mobletName);
       })
@@ -104,25 +105,53 @@ module.exports = yeoman.Base.extend({
     console.log(chalk.blue('\n[BEGIN] Copying files'));
     // var mobletName = this.answers.mobletName;
     var mobletName = 'tmp';
+    var successCount = 0;
     var error = function (err) {
       if (err) {
         console.log(chalk.red('\n[ERROR] Copying files'));
+      } else {
+        successCount++;
+        if (successCount === 7) {
+          console.log(chalk.green('[SUCCESS] Copying files'));
+        }
       }
     };
 
+    mv(mobletName + '/.eslintrc.yml', '.eslintrc.yml', error);
+    mv(mobletName + '/.gitignore', '.gitignore', error);
+    mv(mobletName + '/LICENSE', 'LICENSE', error);
     mv(mobletName + '/moblet', 'moblet', error);
-    mv(mobletName + '/server', '../server', error);
-    mv(mobletName + '/server', '../server', error);
-    mv(mobletName + '/spec', '../spec', error);
-    mv(mobletName + '/package.json', '../package.json', error);
-    mv(mobletName + '/readme.md', '../readme.md', error);
-    mv(mobletName + '/.gitignore', '../.gitignore', error);
-    mv(mobletName + '/.eslintrc.yml', '../.eslintrc.yml', error);
-
-    console.log(chalk.green('\n[SUCCESS] Copying files'));
+    mv(mobletName + '/package.json', 'package.json', error);
+    mv(mobletName + '/readme.md', 'readme.md', error);
+    mv(mobletName + '/server', 'server', error);
+    mv(mobletName + '/spec', 'spec', error);
   },
 
   install: function () {
+    console.log(chalk.blue('\n[BEGIN] Installing dependencies'));
     this.npmInstall(dependencies);
+    if (this.answers.mForgeInstall) {
+      this.npmInstall(dependencies);
+    }
+  },
+
+  end: function () {
+    console.log(chalk.green('[SUCCESS] Installing dependencies'));
+    // var mobletName = this.answers.mobletName;
+    var mobletName = 'tmp';
+    var deleteFolderRecursive = function (path) {
+      if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach(function (file) {
+          var curPath = path + '/' + file;
+          if (fs.lstatSync(curPath).isDirectory()) { // recurse
+            deleteFolderRecursive(curPath);
+          } else { // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(path);
+      }
+    };
+    deleteFolderRecursive(mobletName);
   }
 });
