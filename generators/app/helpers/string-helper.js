@@ -351,14 +351,21 @@ for (var i = 0; i < defaultDiacriticsRemovalap.length; i++) {
   }
 }
 
-module.exports = function (str) {
-  str = str
-          .replace(/\s+/g, '-')
-          .replace(/[,\/#!$%\^&\*;:{}=`~()]/g, '')
-          .replace('--', '-')
-          .replace('--', '-')
-          .toLowerCase();
-  return str.replace(/[^\u0000-\u007E]/g, function (a) {
-    return diacriticsMap[a] || a;
-  });
+module.exports = {
+  normalize: function (input) {
+    input = input
+            .replace(/\s+/g, '-')
+            .replace(/[,\/#!$%\^&\*;:{}=`~()]/g, '')
+            .replace('--', '-')
+            .replace('--', '-')
+            .toLowerCase();
+    return input.replace(/[^\u0000-\u007E]/g, function (a) {
+      return diacriticsMap[a] || a;
+    });
+  },
+  convertToCammelCase: function (input) {
+    return input.toLowerCase().replace(/-(.)/g, function (match, group1) {
+      return group1.toUpperCase();
+    });
+  }
 };

@@ -1,9 +1,9 @@
 var gitClone = require('git-clone');
 var q = require('q');
 
-var clone = function (gitUrl, path) {
+var clone = function (gitUrl) {
   var deferred = q.defer();
-  gitClone(gitUrl, path, function (err) {
+  gitClone(gitUrl, 'tmp', function (err) {
     if (err) {
       deferred.reject('[ERROR] Error cloning ' + gitUrl);
     } else {

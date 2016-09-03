@@ -1,6 +1,6 @@
 {
   "name": "generator-moblet",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Moblets' Yeoman Generator to create a new moblet",
   "homepage": "https://github.com/moblets/generator-moblet#readme",
   "author": {
@@ -24,10 +24,9 @@
   ],
   "dependencies": {
     "chalk": "1.0.0",
+    "fs-extra": "^0.30.0",
     "git-clone": "0.1.0",
-    "mv": "2.1.1",
     "q": "1.4.1",
-    "replace": "^0.3.0",
     "yeoman-generator": "^0.23.0",
     "yosay": "^1.0.0"
   },

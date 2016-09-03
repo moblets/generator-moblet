@@ -1,9 +1,9 @@
 var fs = require('fs');
 var q = require('q');
 
-module.exports = function (path) {
+module.exports = function () {
   var deferred = q.defer();
-  fs.readFile(path + '/package.json', function (err, data) {
+  fs.readFile('tmp/package.json', function (err, data) {
     if (err) {
       deferred.reject('[ERROR] Error reading package.json');
     } else {

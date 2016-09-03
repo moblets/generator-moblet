@@ -1,5 +1,5 @@
-# generator-moblet [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Moblets Yeoman Generator to create a new moblet
+# generator-moblet 
+> Moblets' Yeoman Generator to help developers create new moblets
 
 ## Installation
 
@@ -10,7 +10,7 @@ npm install -g yo
 npm install -g generator-moblet
 ```
 
-Then generate your new project:
+Then generate your new project running:
 
 ```bash
 yo moblet
@@ -25,7 +25,7 @@ yo moblet
 
 ## License
 
-MIT © [Eduardo Russo &lt;russo@fabapp.com&gt;](https://about.me/russoedu)
+MIT © [Eduardo Russo](https://about.me/russoedu)
 
 
 [npm-image]: https://badge.fury.io/js/generator-moblet.svg
