@@ -36,7 +36,7 @@ var files = {
 
     replace('tmp/moblet/' + original + '.js');
 
-    replace('tmp/moblet/' + original + '.scss');
+    replace('tmp/moblet/' + original + '.less');
 
     replace('tmp/moblet/' + original + '.html');
 
@@ -81,7 +81,7 @@ var files = {
 
     fs.move(org + '.js', dst + '.js', respond);
     fs.move(org + '.html', dst + '.html', respond);
-    fs.move(org + '.scss', dst + '.scss', respond);
+    fs.move(org + '.less', dst + '.less', respond);
 
     return deferred.promise;
   },

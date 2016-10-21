@@ -71,8 +71,11 @@ module.exports = yeoman.Base.extend({
       case 'Map moblet':
         baseMoblet = 'm-map';
         break;
-      case 'List moblet':
+      case 'Simple List moblet':
         baseMoblet = 'm-simple-list';
+        break;
+      case 'List moblet':
+        baseMoblet = 'm-list';
         break;
       case 'Fidelity card moblet':
         baseMoblet = 'm-fidelity-card';
